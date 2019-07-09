@@ -344,58 +344,25 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         assertEquals(info.get("endInclusive"),"true");
     }
     
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_121 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_121  }, executionType = ExecutionType.REGRESSION,
-            description = "Check basic facet range search api")
-    @SuppressWarnings("unchecked")
-    public void searchWithRange()
+    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1  }, executionType = ExecutionType.REGRESSION,
+            description = "Check date facet intervals search api")
+    public void searchDateAndSizeRanges()
     {
         SearchRequest query = createQuery("* AND SITE:'" + testSite.getId() + "'");
-
-        RestRequestRangesModel facetRangeModel = new RestRequestRangesModel();
-        facetRangeModel.setField("content.size");
-        facetRangeModel.setStart("0");
-        facetRangeModel.setEnd("200");
-        facetRangeModel.setGap("20");
         List<RestRequestRangesModel> ranges = new ArrayList<>();
+        RestRequestRangesModel facetRangeModel = new RestRequestRangesModel();
+        facetRangeModel.setField("created");
+        facetRangeModel.setStart("2015-09-29T10:45:15.729Z");
+        facetRangeModel.setEnd("2016-09-29T10:45:15.729Z");
+        facetRangeModel.setGap("+280DAY");
         ranges.add(facetRangeModel);
+        RestRequestRangesModel facetCountRangeModel = new RestRequestRangesModel();
+        facetCountRangeModel.setField("content.size");
+        facetCountRangeModel.setStart("0");
+        facetCountRangeModel.setEnd("500");
+        facetCountRangeModel.setGap("200");
+        ranges.add(facetCountRangeModel);
         query.setRanges(ranges);
-        SearchResponse response = query(query);
-        response.assertThat().entriesListIsNotEmpty();
-        response.getContext().assertThat().field("facets").isNotEmpty();
-        RestGenericFacetResponseModel facetResponseModel = response.getContext().getFacets().get(0);
-
-        RestGenericBucketModel bucket = facetResponseModel.getBuckets().get(0);
-        bucket.assertThat().field("label").is("[20 - 40)");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"20\" TO \"40\">");
-        Map<String,String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 2, "Unexpected count for first bucket.");
-        Map<String, String> info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"20");
-        assertEquals(info.get("end"),"40");
-        assertNull(info.get("count"));
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"false");
-
-        bucket = facetResponseModel.getBuckets().get(1);
-        bucket.assertThat().field("label").is("[40 - 120)");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"40\" TO \"120\">");
-        metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for second bucket.");
-        info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"40");
-        assertEquals(info.get("end"),"120");
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"false");
-
-        bucket = facetResponseModel.getBuckets().get(2);
-        bucket.assertThat().field("label").is("[120 - 200]");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"120\" TO \"200\"]");
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for third bucket.");
-        info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"120");
-        assertEquals(info.get("end"),"200");
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"true");
     }
 }
