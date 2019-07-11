@@ -24,6 +24,7 @@ public @interface TestGroup
 
     // Search: Minimum Version Required
     public static final String ASS_1 = "ASS_1.0.0"; // Alfresco Search Services 1.0. Does not work with Solr4
+    public static final String ASS_112 = "ASS_1.1.2"; // Alfresco Search Services 1.1.2
     public static final String PreASS_121 = "PreASS_1.2.1"; // Alfresco Search Services Prior to ASS 1.2.1
     public static final String ASS_MASTER_SLAVE = "ASS_Master_Slave"; // Alfresco Search Services using master slave configurations
     public static final String ASS_MASTER ="ASS_Master"; // Alfresco search services using master/stand alone mode 
