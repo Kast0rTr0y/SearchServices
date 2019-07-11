@@ -29,6 +29,7 @@ public @interface TestGroup
     public static final String ASS_121 = "ASS_1.2.1"; // Alfresco Search Services 1.2.1
     public static final String ASS_13 = "ASS_1.3.0"; // Alfresco Search Services 1.3
     public static final String ASS_1302 = "ASS_1.3.0.2"; // Alfresco Search Services 1.3.0.2 (Fingerprint MNT)
+    public static final String ASS_14 = "ASS_1.4.0"; // Alfresco Search Services 1.4
     public static final String ASS_MASTER_SLAVE = "ASS_Master_Slave"; // Alfresco Search Services using master slave configurations
     public static final String ASS_MASTER ="ASS_Master"; // Alfresco search services using master/stand alone mode 
     
