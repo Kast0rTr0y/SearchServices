@@ -26,7 +26,6 @@ public @interface TestGroup
     public static final String ASS_1 = "ASS_1.0.0"; // Alfresco Search Services 1.0. Does not work with Solr4
     public static final String ASS_112 = "ASS_1.1.2"; // Alfresco Search Services 1.1.2
     public static final String ASS_12 = "ASS_1.2.0"; // Alfresco Search Services 1.2
-    public static final String PreASS_121 = "PreASS_1.2.1"; // Alfresco Search Services Prior to ASS 1.2.1
     public static final String ASS_121 = "ASS_1.2.1"; // Alfresco Search Services 1.2.1
     public static final String ASS_13 = "ASS_1.3.0"; // Alfresco Search Services 1.3
     public static final String ASS_1302 = "ASS_1.3.0.2"; // Alfresco Search Services 1.3.0.2 (Fingerprint MNT)
@@ -36,7 +35,7 @@ public @interface TestGroup
     
     public static final String INSIGHT_10 = "InsightEngine_1.0.0"; // Alfresco Insight Engine 1.0
     public static final String INSIGHT_11 = "InsightEngine_1.1.0"; // Alfresco Insight Engine 1.1
-    public static final String INSIGHT_12 = "InsightEngine_1.2.0"; // Alfresco Insight Engine 1.2
+
     public static final String SOLR = "SOLR"; //To be used for tests for /solr/alfresco/* end-points
     
     public static final String ACS_52n = "ACS_52n"; // Alfresco Content Services 5.2.n
