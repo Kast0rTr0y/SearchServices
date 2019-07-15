@@ -35,8 +35,6 @@ public @interface TestGroup
     
     public static final String INSIGHT_10 = "InsightEngine_1.0.0"; // Alfresco Insight Engine 1.0
     public static final String INSIGHT_11 = "InsightEngine_1.1.0"; // Alfresco Insight Engine 1.1
-    public static final String INSIGHT_12 = "InsightEngine_1.2.0"; // Alfresco Insight Engine 1.2
-
     public static final String SOLR = "SOLR"; //To be used for tests for /solr/alfresco/* end-points
     
     public static final String ACS_52n = "ACS_52n"; // Alfresco Content Services 5.2.n
