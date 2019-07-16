@@ -65,7 +65,7 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats using Search api")
     public void searchWithBasicStats()
     {
@@ -148,7 +148,7 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats labels using Search api")
     public void searchWithStatsLabel()
     {
@@ -167,7 +167,7 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats fitlers using Search api")
     public void searchWithStatsFilters()
     {
@@ -201,7 +201,7 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats with Pivot using Search api")
     public void searchWithStatsAndMutlilevelPivot()
     {
@@ -263,7 +263,7 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
 
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats with Pivot using Search api")
     public void searchWithStatsAndPivot()
     {

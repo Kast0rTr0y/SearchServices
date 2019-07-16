@@ -11,6 +11,10 @@ public @interface TestGroup
 {
     public static final String SANITY = "sanity";
   
+    // Used for TestRail test annotation
+    public static final String SEARCH = "search";
+    public static final String REST_API = "rest-api";
+
     public static final String PREUPGRADE = "pre-upgrade";
     public static final String POSTUPGRADE = "post-upgrade";
 
