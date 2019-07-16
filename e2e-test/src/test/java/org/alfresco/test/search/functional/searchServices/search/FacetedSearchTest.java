@@ -102,8 +102,8 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
         waitForContentIndexing(file4.getContent(), true);
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = { TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION, description = "Checks facet queries for the Search api")
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION, description = "Checks facet queries for the Search api")
     public void searchWithQueryFaceting() throws Exception
     {
         SearchRequest query = new SearchRequest();
@@ -181,8 +181,8 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
      *     }
      * }}
      */
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks facet queries for the Search api")
     public void searchQueryFacetingWithGroup() throws Exception
     {
@@ -246,8 +246,8 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
      *  }
      * }
      */
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH ,TestGroup.ASS_1 }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks facet queries for the Search api")
     public void searchWithFactedFields() throws Exception
     {
@@ -292,8 +292,8 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
      *  "facetFormat":"V2"
      * }
      */
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks facet queries for the Search api")
     public void searchWithFactedFieldsFacetFormatV2() throws Exception
     {

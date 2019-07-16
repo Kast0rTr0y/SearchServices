@@ -104,8 +104,8 @@ public class FacetIntervalSearchTest extends AbstractSearchServicesE2ETest
                     .containsSummary("duplicate interval label [thesame=2]");
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Check basic facet intervals search api")
     public void searchWithBasicInterval()throws Exception
     {
@@ -147,8 +147,8 @@ public class FacetIntervalSearchTest extends AbstractSearchServicesE2ETest
         bucket.getMetrics().get(0).assertThat().field("value").is("{count=0}");
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Check date facet intervals search api")
     public void searchWithDates() throws Exception
     {
