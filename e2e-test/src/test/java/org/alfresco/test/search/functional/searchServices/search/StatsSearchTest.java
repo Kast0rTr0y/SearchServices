@@ -64,9 +64,8 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
         waitForContentIndexing(file2.getContent(), true);
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH})
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH },
-              executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats using Search api")
     public void searchWithBasicStats()
     {

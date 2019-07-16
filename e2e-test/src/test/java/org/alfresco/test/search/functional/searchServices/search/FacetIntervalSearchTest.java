@@ -50,8 +50,8 @@ public class FacetIntervalSearchTest extends AbstractSearchServicesE2ETest
         waitForContentIndexing(file4.getContent(), true);
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Check facet intervals mandatory fields")
     public void checkingFacetsMandatoryErrorMessages()throws Exception
     {
