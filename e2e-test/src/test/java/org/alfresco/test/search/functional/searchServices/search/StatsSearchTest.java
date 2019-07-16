@@ -64,9 +64,8 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
         waitForContentIndexing(file2.getContent(), true);
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 },
-              executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats using Search api")
     public void searchWithBasicStats()
     {
@@ -148,9 +147,8 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
         assertTrue(percentiles.keySet().containsAll(Arrays.asList("1.0","75.0","99.0","99.9")));
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 },
-              executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats labels using Search api")
     public void searchWithStatsLabel()
     {
@@ -168,9 +166,8 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
         assertStatsFacetedResponse(response, "DateChanged", 8);
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 },
-              executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats fitlers using Search api")
     public void searchWithStatsFilters()
     {
@@ -203,9 +200,8 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
         assertTrue((Integer)metricCount.get("countValues") > count, "With the exclude filter there will be more documents than returned");
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 },
-              executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats with Pivot using Search api")
     public void searchWithStatsAndMutlilevelPivot()
     {
@@ -266,9 +262,8 @@ public class StatsSearchTest extends AbstractSearchServicesE2ETest
     }
 
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 },
-              executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(executionType = ExecutionType.REGRESSION,
               description = "Checks errors with stats with Pivot using Search api")
     public void searchWithStatsAndPivot()
     {
