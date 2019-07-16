@@ -51,7 +51,7 @@ public class FacetIntervalSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Check facet intervals mandatory fields")
     public void checkingFacetsMandatoryErrorMessages()throws Exception
     {
@@ -105,7 +105,7 @@ public class FacetIntervalSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Check basic facet intervals search api")
     public void searchWithBasicInterval()throws Exception
     {
@@ -148,7 +148,7 @@ public class FacetIntervalSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Check date facet intervals search api")
     public void searchWithDates() throws Exception
     {

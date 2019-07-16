@@ -85,7 +85,7 @@ public class SearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks its possible to include the original request in the response")
     public void searchWithRequest()
     {
@@ -102,7 +102,7 @@ public class SearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
             description = "Tests a search request containing a sort clause.")
     public void searchWithOneSortClause()
     {
@@ -149,7 +149,7 @@ public class SearchTest extends AbstractSearchServicesE2ETest
      * processed and the returned order is determined by the second clause.
      */
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
             description = "Tests a search request containing a sort clause.")
     public void searchWithTwoSortClauses()
     {
@@ -193,8 +193,7 @@ public class SearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test(groups = { TestGroup.ACS_61n})
-    @TestRail(section = {
-        TestGroup.ACS_61n }, executionType = ExecutionType.REGRESSION, description = "Checks the \"include\" request parameter support the 'permissions' option")
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ACS_61n }, executionType = ExecutionType.REGRESSION, description = "Checks the \"include\" request parameter support the 'permissions' option")
     public void searchQuery_includePermissions_shouldReturnNodeWithPermissionsInformation()
     {
         String query = "fox";
@@ -217,7 +216,7 @@ public class SearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test(groups = { TestGroup.ACS_61n })
-    @TestRail(section = { TestGroup.ACS_61n  }, executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH,  TestGroup.ACS_61n  }, executionType = ExecutionType.REGRESSION,
             description = "Checks the \"include\" request parameter support the 'isLocked' option")
     public void searchQuery_includeIsLocked_shouldReturnNodeWithLockInformation() throws Exception {
         String query = "fox";
@@ -251,7 +250,7 @@ public class SearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test(groups = { TestGroup.ACS_61n })
-    @TestRail(section = { TestGroup.ACS_61n  }, executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ACS_61n  }, executionType = ExecutionType.REGRESSION,
             description = "Checks the \"include\" request parameter does not support the 'notValid' option")
     public void searchQuery_includeInvalid_shouldReturnBadResponse()
     {

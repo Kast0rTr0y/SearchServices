@@ -103,7 +103,7 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION, description = "Checks facet queries for the Search api")
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION, description = "Checks facet queries for the Search api")
     public void searchWithQueryFaceting() throws Exception
     {
         SearchRequest query = new SearchRequest();
@@ -182,7 +182,7 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
      * }}
      */
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks facet queries for the Search api")
     public void searchQueryFacetingWithGroup() throws Exception
     {
@@ -247,7 +247,7 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
      * }
      */
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks facet queries for the Search api")
     public void searchWithFactedFields() throws Exception
     {
@@ -293,7 +293,7 @@ public class FacetedSearchTest extends AbstractSearchServicesE2ETest
      * }
      */
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks facet queries for the Search api")
     public void searchWithFactedFieldsFacetFormatV2() throws Exception
     {

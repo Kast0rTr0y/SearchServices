@@ -58,7 +58,7 @@ public class PivotFacetedSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks errors with pivot using Search api")
     public void searchWithPivotingErrors()
     {
@@ -90,7 +90,7 @@ public class PivotFacetedSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks with pivot using Search api")
     public void searchWithPivoting()
     {
@@ -118,7 +118,7 @@ public class PivotFacetedSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks nested pivot using Search api")
     public void searchWithNestedPivoting()
     {
@@ -174,7 +174,7 @@ public class PivotFacetedSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks range pivots using Search api")
     public void searchWithRangePivoting()
     {
@@ -237,7 +237,7 @@ public class PivotFacetedSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @Test
-    @TestRail(executionType = ExecutionType.REGRESSION,
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Checks with pivot using Search api and a label as a key")
     public void searchWithPivotingUsingLabel()
     {
