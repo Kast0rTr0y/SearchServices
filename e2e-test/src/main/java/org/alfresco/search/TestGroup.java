@@ -16,7 +16,6 @@ public @interface TestGroup
     public static final String PREUPGRADE = "pre-upgrade";
     public static final String POSTUPGRADE = "post-upgrade";
 
-    // Search: Minimum Version Required
     public static final String ASS_MASTER_SLAVE = "ASS_Master_Slave"; // Alfresco Search Services using master slave configurations
     public static final String ASS_MASTER ="ASS_Master"; // Alfresco search services using master/stand alone mode 
     
