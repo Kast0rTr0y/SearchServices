@@ -9,8 +9,6 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD })
 public @interface TestGroup
 {
-    public static final String SANITY = "sanity";
-  
     // Used for TestRail test annotation
     public static final String SEARCH = "search";
     public static final String REST_API = "rest-api";
