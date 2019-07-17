@@ -60,7 +60,7 @@ public class SetupTest extends AbstractE2EFunctionalTest
     }
 
     // Test Custom Model: Music can be used
-    @Test(priority = 2, groups = { TestGroup.SANITY })
+    @Test(priority = 2)
     public void testModelMusicCanBeUsed() throws Exception
     {
         // Create document of custom type
