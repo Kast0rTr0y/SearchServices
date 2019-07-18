@@ -117,7 +117,7 @@ public class SearchAPATHTest extends AbstractSearchServicesE2ETest
         getFirstBucket(response).assertThat().field("label").contains("1/");
     }
 
-    @Test(groups={TestGroup.SEARCH, TestGroup.REST_API, TestGroup.ASS_1})
+    @Test
     public void searchLevel2()
     {
         String queryString = "name:cars";
