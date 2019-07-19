@@ -78,8 +78,8 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         waitForContentIndexing(file4.getContent(), true);
     }
 
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.ASS_1  }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
             description = "Check facet intervals mandatory fields")
     public void checkingFacetsMandatoryErrorMessages()
     {
@@ -124,8 +124,8 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @SuppressWarnings("unchecked")
-	@Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121  }, executionType = ExecutionType.REGRESSION,
+	@Test
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Check basic facet range search api")
     public void searchWithRangePreASS121()throws Exception
     {
@@ -169,8 +169,8 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
     }
 
     @SuppressWarnings("unchecked")
-	@Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121  }, executionType = ExecutionType.REGRESSION,
+	@Test
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Check date facet intervals search api")
     public void searchWithRangeHardendPreASS121()throws Exception
     {
@@ -227,8 +227,8 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         assertEquals(info.get("endInclusive"),"true");
     }
     @SuppressWarnings("unchecked")
-	@Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121  }, executionType = ExecutionType.REGRESSION,
+	@Test
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Check date facet intervals search api")
     public void searchDateRangePreASS121()throws Exception
     {
@@ -262,8 +262,8 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         assertEquals(info.get("endInclusive"),"false");
     }
     
-    @Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121  }, executionType = ExecutionType.REGRESSION,
+    @Test
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
               description = "Check date facet intervals search api")
     public void searchDateAndSizeRangesPreASS121()throws Exception
     {
@@ -285,8 +285,8 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
     }
     
     @SuppressWarnings("unchecked")
-	@Test(groups = { TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121 })
-    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH, TestGroup.PreASS_121  }, executionType = ExecutionType.REGRESSION,
+	@Test
+    @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
               description = "Check basic facet range search api")
     public void searchWithRangeAndIncludeUpperBoundPreASS121()throws Exception
     {
