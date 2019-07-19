@@ -6,6 +6,12 @@
         <listener class-name="org.alfresco.utility.report.log.LogsListener"/>
         <listener class-name="org.alfresco.utility.report.HtmlReportListener"/>
     </listeners>
+    
+    <test name="Smoke">
+        <classes>
+            <class name="org.alfresco.test.search.functional.searchServices.sanity.SetupTest" />
+        </classes>
+    </test>
 
     <test name="E2E-SearchServices">
         <packages>
