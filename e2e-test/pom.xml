@@ -51,6 +51,11 @@
    </build>
    <dependencies>
       <dependency>
+         <groupId>org.alfresco</groupId>
+         <artifactId>alfresco-insight-jdbc</artifactId>
+         <version>1.5.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
          <groupId>org.alfresco.tas</groupId>
          <artifactId>restapi</artifactId>
          <version>${tas.rest.api.version}</version>
