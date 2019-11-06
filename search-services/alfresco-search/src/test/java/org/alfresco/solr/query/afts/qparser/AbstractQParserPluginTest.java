@@ -18,17 +18,8 @@
  */
 package org.alfresco.solr.query.afts.qparser;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.IntStream.range;
-
-import org.alfresco.solr.AbstractAlfrescoSolrTests;
+import org.alfresco.solr.AbstractAlfrescoSolrIT;
 import org.junit.BeforeClass;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 /**
@@ -36,7 +27,7 @@ import java.util.stream.Stream;
  *
  * @author Andrea Gazzarini
  */
-public abstract class AbstractQParserPluginTest extends AbstractAlfrescoSolrTests
+public abstract class AbstractQParserPluginTest extends AbstractAlfrescoSolrIT
 {
     @BeforeClass
     public static void spinUpSolr() throws Exception
