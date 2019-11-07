@@ -66,7 +66,7 @@ public class ContentTrackerTest
     }
 
     @Test
-    @Ignore("Superseded by AlfrescoSolrTrackerTest")
+    @Ignore("Superseded by AlfrescoSolrTrackerIT")
 
     public void doTrackWithNoContentDoesNothing() throws Exception
     {
@@ -76,7 +76,7 @@ public class ContentTrackerTest
     }
 
     @Test
-    @Ignore("Superseded by AlfrescoSolrTrackerTest")
+    @Ignore("Superseded by AlfrescoSolrTrackerIT")
     public void doTrackWithContentUpdatesContent() throws Exception
     {
         List<TenantAclIdDbId> docs1 = new ArrayList<>();
