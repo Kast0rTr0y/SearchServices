@@ -101,7 +101,11 @@ public class AlfrescoCollatableMLTextFieldType extends StrField
         private final String[] values;
 
         private BinaryDocValues docTerms;
-        
+
+        /**
+         * An array of flags - one for each document in the segment. Each bit is set to true if the document has the
+         * field or false otherwise. If this is set to null then all docs in the segment have the field.
+         */
         private Bits docsWithField;
 
         private final String field;
@@ -153,7 +157,8 @@ public class AlfrescoCollatableMLTextFieldType extends StrField
 
         private String findBestValue(int doc, BytesRef term)
         {
-            if (term.length == 0 && docsWithField.get(doc) == false) {
+            if (term.length == 0 && docsWithField != null && docsWithField.get(doc) == false)
+            {
                 return null;
             }
             
