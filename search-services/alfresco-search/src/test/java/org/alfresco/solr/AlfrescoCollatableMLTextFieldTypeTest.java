@@ -27,7 +27,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.text.Collator;
 import java.util.Locale;
 
-import org.alfresco.solr.AlfrescoCollatableTextFieldType.TextSortFieldComparator;
+import org.alfresco.solr.AlfrescoCollatableMLTextFieldType.MLTextSortFieldComparator;
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
@@ -36,8 +36,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-/** Unit tests for {@link AlfrescoCollatableTextFieldType}. */
-public class AlfrescoCollatableTextFieldTypeTest
+/** Unit tests for {@link AlfrescoCollatableMLTextFieldType}. */
+public class AlfrescoCollatableMLTextFieldTypeTest
 {
     private static final int NUM_HITS = 3;
     private static final String FIELD = "field";
@@ -48,7 +48,7 @@ public class AlfrescoCollatableTextFieldTypeTest
     private static final String BOTTOM_STRING = "Bottom";
 
     @InjectMocks
-    TextSortFieldComparator textSortFieldComparator = new TextSortFieldComparator(NUM_HITS, FIELD, LOCALE);
+    MLTextSortFieldComparator textSortFieldComparator = new MLTextSortFieldComparator(NUM_HITS, FIELD, LOCALE);
     @Mock
     BinaryDocValues mockDocTerms;
     @Mock
@@ -116,18 +116,50 @@ public class AlfrescoCollatableTextFieldTypeTest
         verify(mockCollator).compare(BOTTOM_STRING, "Some value");
     }
 
-    /** Check the behaviour if the term is encoded. */
+    /** Check the behaviour if the multilanguage term is encoded. */
     @Test
-    public void testCompareBottom_encodedTerm()
+    public void testCompareBottom_encodedTerm_localeFound()
     {
+        // Create an encoded multilanguage string with Russian, US English and Thai with Thai digits.
+        String mlText = "\u0000ru\u0000First\u0000Ignored" +
+                "\u0000en_US\u0000Second\u0000IgnoredToo" +
+                "\u0000th_TH_TH\u0000Third\u0000AlsoIgnored";
         // Set up the document to have an encoded value for the field.
-        when(mockDocTerms.get(DOC)).thenReturn(new BytesRef("\u0000Value\u0000Ignored"));
+        when(mockDocTerms.get(DOC)).thenReturn(new BytesRef(mlText));
         when(mockDocsWithField.get(DOC)).thenReturn(false);
+
+        // Check that the Russian text can be extracted.
+        textSortFieldComparator.collatorLocale = Locale.forLanguageTag("ru");
+        textSortFieldComparator.compareBottom(DOC);
+        verify(mockCollator).compare(BOTTOM_STRING, "First");
+
+        // Check that the English text can be extracted.
+        textSortFieldComparator.collatorLocale = Locale.forLanguageTag("en");
+        textSortFieldComparator.compareBottom(DOC);
+        verify(mockCollator).compare(BOTTOM_STRING, "Second");
+
+        // Check that the Thai text can be extracted.
+        textSortFieldComparator.collatorLocale = Locale.forLanguageTag("th");
+        textSortFieldComparator.compareBottom(DOC);
+        verify(mockCollator).compare(BOTTOM_STRING, "Third");
+
+        // Reset the locale for other tests.
+        textSortFieldComparator.collatorLocale = LOCALE;
+    }
+
+    /** Check the behaviour if the term has a locale but no text. */
+    @Test
+    public void testCompareBottom_badlyEncodedTerm()
+    {
+        // Set the value to have a locale but no text.
+        String mlText = "\u0000ru";
+        when(mockDocTerms.get(DOC)).thenReturn(new BytesRef(mlText));
 
         // Call the method under test.
         textSortFieldComparator.compareBottom(DOC);
 
-        verify(mockCollator).compare(BOTTOM_STRING, "Value");
+        // Check that an empty string is assumed.
+        verify(mockCollator).compare(BOTTOM_STRING, "");
     }
 
     @Test
