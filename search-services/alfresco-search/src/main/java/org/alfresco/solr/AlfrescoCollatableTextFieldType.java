@@ -117,7 +117,7 @@ public class AlfrescoCollatableTextFieldType extends StrField
 
         String bottom;
         
-        private String top;
+        String top;
 
         Locale collatorLocale;
 
