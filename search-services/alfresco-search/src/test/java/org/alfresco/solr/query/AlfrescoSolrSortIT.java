@@ -43,6 +43,7 @@ public class AlfrescoSolrSortIT extends AbstractAlfrescoDistributedIT
     public void AlfrescoCollatableFieldType_emptyValuesSortingAsc__shouldBeRankedFirst() throws Exception {
         prepareIndexSegmentWithAllNonNullFieldValues("text@s__sort@{http://www.alfresco.org/model/content/1.0}title");
         putHandleDefaults();
+        // Docs with id 1, 3, 5 and 6 should be first (note that these will be sorted by indexing time).
         String[] expectedRanking = new String[]{"1","3","5","6","4","2"};
         
         QueryResponse response = query(getDefaultTestClient(), true,
@@ -61,6 +62,7 @@ public class AlfrescoSolrSortIT extends AbstractAlfrescoDistributedIT
         prepareIndexSegmentWithAllNonNullFieldValues("mltext@m__sort@{http://www.alfresco.org/model/content/1.0}title");
 
         putHandleDefaults();
+        // Docs with id 1, 3, 5 and 6 should be last (note that these will be sorted by indexing time).
         String[] expectedRanking = new String[]{"2","4","1","3","5","6"};
 
         QueryResponse response = query(getDefaultTestClient(), true,
@@ -74,6 +76,7 @@ public class AlfrescoSolrSortIT extends AbstractAlfrescoDistributedIT
         }
     }
 
+    /** Create six documents where the field is null for docs with id 1, 3, 5 and 6, and populated for docs with id 2 and 4. */
     private void prepareIndexSegmentWithAllNonNullFieldValues(String field) throws Exception {
         index(getDefaultTestClient(), true, "id", "1", "_version_", "0", field, "");
         index(getDefaultTestClient(), true, "id", "2", "_version_", "0", field, "B");
