@@ -67,7 +67,7 @@ import org.testng.annotations.Test;
  *  }
  * }
  * @author Michael Suzuki
- *
+ * @author Meenal Bhave
  */
 public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
 {
@@ -78,7 +78,7 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         waitForContentIndexing(file4.getContent(), true);
     }
 
-    @Test
+    @Test(priority = 1)
     @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
             description = "Check facet intervals mandatory fields")
     public void checkingFacetsMandatoryErrorMessages()
@@ -123,7 +123,7 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         facetRangeModel.setGap("100");
     }
     
-    @Test
+    @Test(priority = 2)
     @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH}, executionType = ExecutionType.REGRESSION,
             description = "Check basic facet range search api")
     @SuppressWarnings("unchecked")
@@ -145,40 +145,30 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         RestGenericFacetResponseModel facetResponseModel = response.getContext().getFacets().get(0);
 
         RestGenericBucketModel bucket = facetResponseModel.getBuckets().get(0);
-        bucket.assertThat().field("label").is("[20 - 40)");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"20\" TO \"40\">");
-        Map<String,String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 2, "Unexpected count for first bucket.");
+        bucket.assertThat().field("label").is("[0 - 20)");
+        bucket.assertThat().field("filterQuery").is("content.size:[\"0\" TO \"20\">");
+        Map<String, String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
+        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 0, "Unexpected count for first bucket.");
         Map<String, String> info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"20");
-        assertEquals(info.get("end"),"40");
+        assertEquals(info.get("start"), "0");
+        assertEquals(info.get("end"), "20");
         assertNull(info.get("count"));
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"false");
+        assertEquals(info.get("startInclusive"), "true");
+        assertEquals(info.get("endInclusive"), "false");
 
         bucket = facetResponseModel.getBuckets().get(1);
-        bucket.assertThat().field("label").is("[40 - 120)");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"40\" TO \"120\">");
+        bucket.assertThat().field("label").is("[20 - 40)");
+        bucket.assertThat().field("filterQuery").is("content.size:[\"20\" TO \"40\">");
         metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for second bucket.");
+        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 2, "Unexpected count for second bucket.");
         info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"40");
-        assertEquals(info.get("end"),"120");
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"false");
-
-        bucket = facetResponseModel.getBuckets().get(2);
-        bucket.assertThat().field("label").is("[120 - 200]");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"120\" TO \"200\"]");
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for third bucket.");
-        info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"120");
-        assertEquals(info.get("end"),"200");
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"true");
+        assertEquals(info.get("start"), "20");
+        assertEquals(info.get("end"), "40");
+        assertEquals(info.get("startInclusive"), "true");
+        assertEquals(info.get("endInclusive"), "false");
     }
 
-    @Test
+    @Test(priority = 3)
     @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
             description = "Check date facet intervals search api")
     @SuppressWarnings("unchecked")
@@ -189,10 +179,10 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         RestRequestRangesModel facetRangeModel = new RestRequestRangesModel();
         facetRangeModel.setField("content.size");
         facetRangeModel.setStart("0");
-        facetRangeModel.setEnd("200");
-        facetRangeModel.setGap("20");
+        facetRangeModel.setEnd("500");
+        facetRangeModel.setGap("200");
         facetRangeModel.setHardend(true);
-        List<RestRequestRangesModel> ranges = new ArrayList<>();
+        List<RestRequestRangesModel> ranges = new ArrayList<RestRequestRangesModel>();
         ranges.add(facetRangeModel);
         query.setRanges(ranges);
         SearchResponse response = query(query);
@@ -201,44 +191,44 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         RestGenericFacetResponseModel facetResponseModel = response.getContext().getFacets().get(0);
 
         RestGenericBucketModel bucket = facetResponseModel.getBuckets().get(0);
-        bucket.assertThat().field("label").is("[20 - 40)");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"20\" TO \"40\">");
-        Map<String,String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 2, "Unexpected count for first bucket.");
+        bucket.assertThat().field("label").is("[0 - 200)");
+        bucket.assertThat().field("filterQuery").is("content.size:[\"0\" TO \"200\">");
+        Map<String, String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
+        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 4, "Unexpected count for first bucket.");
         Map<String, String> info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"20");
-        assertEquals(info.get("end"),"40");
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"false");
+        assertEquals(info.get("start"), "0");
+        assertEquals(info.get("end"), "200");
+        assertEquals(info.get("startInclusive"), "true");
+        assertEquals(info.get("endInclusive"), "false");
         assertNull(info.get("count"));
 
         bucket = facetResponseModel.getBuckets().get(1);
-        bucket.assertThat().field("label").is("[40 - 120)");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"40\" TO \"120\">");
+        bucket.assertThat().field("label").is("[200 - 400)");
+        bucket.assertThat().field("filterQuery").is("content.size:[\"200\" TO \"400\">");
         info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"40");
-        assertEquals(info.get("end"),"120");
+        assertEquals(info.get("start"), "200");
+        assertEquals(info.get("end"), "400");
         metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for second bucket.");
+        assertTrue(Integer.valueOf(metric.get("count")) == 0, "Unexpected count for second bucket.");
         assertNull(info.get("count"));
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"false");
+        assertEquals(info.get("startInclusive"), "true");
+        assertEquals(info.get("endInclusive"), "false");
 
         bucket = facetResponseModel.getBuckets().get(2);
-        bucket.assertThat().field("label").is("[120 - 200]");
-        bucket.assertThat().field("filterQuery").is("content.size:[\"120\" TO \"200\"]");
+        bucket.assertThat().field("label").is("[400 - 500]");
+        bucket.assertThat().field("filterQuery").is("content.size:[\"400\" TO \"500\"]");
         metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for third bucket.");
+        assertTrue(Integer.valueOf(metric.get("count")) >= 0, "Unexpected count for third bucket.");
         info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"120");
-        assertEquals(info.get("end"),"200");
+        assertEquals(info.get("start"), "400");
+        assertEquals(info.get("end"), "500");
         assertNull(info.get("count"));
-        assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"true");
+        assertEquals(info.get("startInclusive"), "true");
+        assertEquals(info.get("endInclusive"), "true");
     }
 
     /** This test relies on a document created in 2015 existing, probably part of the sample site. */
-    @Test
+    @Test(priority = 4)
     @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
             description = "Check date facet intervals search api")
     @SuppressWarnings("unchecked")
@@ -251,7 +241,7 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         facetRangeModel.setStart("2015-09-29T10:45:15.729Z");
         facetRangeModel.setEnd("2016-09-29T10:45:15.729Z");
         facetRangeModel.setGap("+280DAY");
-        List<RestRequestRangesModel> ranges = new ArrayList<>();
+        List<RestRequestRangesModel> ranges = new ArrayList<RestRequestRangesModel>();
         ranges.add(facetRangeModel);
         query.setRanges(ranges);
         SearchResponse response = query(query);
@@ -260,21 +250,21 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         RestGenericFacetResponseModel facetResponseModel = response.getContext().getFacets().get(0);
 
         List<RestGenericBucketModel> buckets = facetResponseModel.getBuckets();
-        assertThat(buckets.size(),is(1));
-
+        assertThat(buckets.size(),is(2));
+        
         RestGenericBucketModel bucket = buckets.get(0);
-        bucket.assertThat().field("label").is("[2015-09-29T10:45:15.729Z - 2017-04-11T10:45:15.729Z]");
-        bucket.assertThat().field("filterQuery").is("created:[\"2015-09-29T10:45:15.729Z\" TO \"2017-04-11T10:45:15.729Z\"]");
+        bucket.assertThat().field("label").is("[2015-09-29T10:45:15.729Z - 2016-07-05T10:45:15.729Z)");
+        bucket.assertThat().field("filterQuery").is("created:[\"2015-09-29T10:45:15.729Z\" TO \"2016-07-05T10:45:15.729Z\">");
         bucket.getMetrics().get(0).assertThat().field("value").is("{count=1}");
         Map<String, String> info = (Map<String, String>) bucket.getBucketInfo();
         assertEquals(info.get("start"),"2015-09-29T10:45:15.729Z");
-        assertEquals(info.get("end"),"2017-04-11T10:45:15.729Z");
-        assertNull(info.get("count"),"1");
+        assertEquals(info.get("end"),"2016-07-05T10:45:15.729Z");
+        assertNull(info.get("count"),"Expecting count to be null");
         assertEquals(info.get("startInclusive"),"true");
-        assertEquals(info.get("endInclusive"),"true");
+        assertEquals(info.get("endInclusive"),"false");
     }
 
-    @Test
+    @Test(priority = 5)
     @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
             description = "Check date facet intervals search api")
     public void searchDateAndSizeRanges()
@@ -296,7 +286,7 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         query.setRanges(ranges);
     }
 
-    @Test
+    @Test(priority = 6)
     @TestRail(section = {TestGroup.REST_API, TestGroup.SEARCH }, executionType = ExecutionType.REGRESSION,
             description = "Check basic facet range search api")
     @SuppressWarnings("unchecked")
@@ -307,12 +297,12 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         RestRequestRangesModel facetRangeModel = new RestRequestRangesModel();
         facetRangeModel.setField("content.size");
         facetRangeModel.setStart("0");
-        facetRangeModel.setEnd("200");
-        facetRangeModel.setGap("20");
-        List<String> include = new ArrayList<>();
+        facetRangeModel.setEnd("500");
+        facetRangeModel.setGap("200");
+        List<String> include = new ArrayList<String>();
         include.add("upper");
         facetRangeModel.setInclude(include);
-        List<RestRequestRangesModel> ranges = new ArrayList<>();
+        List<RestRequestRangesModel> ranges = new ArrayList<RestRequestRangesModel>();
         ranges.add(facetRangeModel);
         query.setRanges(ranges);
         SearchResponse response = query(query);
@@ -321,37 +311,37 @@ public class FacetRangeSearchTest extends AbstractSearchServicesE2ETest
         RestGenericFacetResponseModel facetResponseModel = response.getContext().getFacets().get(0);
 
         RestGenericBucketModel bucket = facetResponseModel.getBuckets().get(0);
-        bucket.assertThat().field("label").is("(20 - 40]");
-        bucket.assertThat().field("filterQuery").is("content.size:<\"20\" TO \"40\"]");
-        Map<String,String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 2, "Unexpected count for first bucket.");
+        bucket.assertThat().field("label").is("(0 - 200]");
+        bucket.assertThat().field("filterQuery").is("content.size:<\"0\" TO \"200\"]");
+        Map<String, String> metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
+        assertTrue(Integer.valueOf(metric.get("count")) >= 4, "Unexpected count for first bucket.");
         Map<String, String> info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"20");
-        assertEquals(info.get("end"),"40");
+        assertEquals(info.get("start"), "0");
+        assertEquals(info.get("end"), "200");
         assertNull(info.get("count"));
-        assertEquals(info.get("startInclusive"),"false");
-        assertEquals(info.get("endInclusive"),"true");
+        assertEquals(info.get("startInclusive"), "false");
+        assertEquals(info.get("endInclusive"), "true");
 
         bucket = facetResponseModel.getBuckets().get(1);
-        bucket.assertThat().field("label").is("(40 - 120]");
-        bucket.assertThat().field("filterQuery").is("content.size:<\"40\" TO \"120\"]");
+        bucket.assertThat().field("label").is("(200 - 400]");
+        bucket.assertThat().field("filterQuery").is("content.size:<\"200\" TO \"400\"]");
         metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for second bucket.");
+        assertTrue(Integer.valueOf(metric.get("count")) == 0, "Unexpected count for second bucket.");
         info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"40");
-        assertEquals(info.get("end"),"120");
-        assertEquals(info.get("startInclusive"),"false");
-        assertEquals(info.get("endInclusive"),"true");
+        assertEquals(info.get("start"), "200");
+        assertEquals(info.get("end"), "400");
+        assertEquals(info.get("startInclusive"), "false");
+        assertEquals(info.get("endInclusive"), "true");
 
         bucket = facetResponseModel.getBuckets().get(2);
-        bucket.assertThat().field("label").is("(120 - 200]");
-        bucket.assertThat().field("filterQuery").is("content.size:<\"120\" TO \"200\"]");
+        bucket.assertThat().field("label").is("(400 - 600]");
+        bucket.assertThat().field("filterQuery").is("content.size:<\"400\" TO \"600\"]");
         metric = (Map<String, String>) bucket.getMetrics().get(0).getValue();
-        assertEquals(Integer.valueOf(metric.get("count")).intValue(), 1, "Unexpected count for third bucket.");
+        assertTrue(Integer.valueOf(metric.get("count")) == 0, "Unexpected count for third bucket.");
         info = (Map<String, String>) bucket.getBucketInfo();
-        assertEquals(info.get("start"),"120");
-        assertEquals(info.get("end"),"200");
-        assertEquals(info.get("startInclusive"),"false");
-        assertEquals(info.get("endInclusive"),"true");
-    }    
+        assertEquals(info.get("start"), "400");
+        assertEquals(info.get("end"), "600");
+        assertEquals(info.get("startInclusive"), "false");
+        assertEquals(info.get("endInclusive"), "true");
+    }
 }
