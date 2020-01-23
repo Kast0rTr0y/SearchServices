@@ -53,6 +53,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <runOrder>alphabetical</runOrder>
+                </configuration>
             </plugin>
         </plugins>
     </build>
