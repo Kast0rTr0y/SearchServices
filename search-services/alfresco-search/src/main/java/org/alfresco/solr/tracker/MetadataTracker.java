@@ -40,6 +40,7 @@ import org.alfresco.solr.client.Node.SolrApiNodeStatus;
 import org.alfresco.solr.client.SOLRAPIClient;
 import org.alfresco.solr.client.Transaction;
 import org.alfresco.solr.client.Transactions;
+import org.alfresco.util.Pair;
 import org.apache.commons.codec.EncoderException;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -64,6 +65,12 @@ public class MetadataTracker extends CoreStatePublisher implements Tracker
     private ConcurrentLinkedQueue<Long> nodesToPurge = new ConcurrentLinkedQueue<>();
     private ConcurrentLinkedQueue<String> queriesToReindex = new ConcurrentLinkedQueue<>();
 
+    /**
+     * Transaction Id range to get the first transaction in database.
+     * 0-2000 by default.
+     */
+    private Pair<Long, Long> minTxnIdRange;
+
     public MetadataTracker(final boolean isMaster, Properties p, SOLRAPIClient client, String coreName,
                 InformationServer informationServer)
     {
@@ -71,6 +78,8 @@ public class MetadataTracker extends CoreStatePublisher implements Tracker
         transactionDocsBatchSize = Integer.parseInt(p.getProperty("alfresco.transactionDocsBatchSize", "100"));
         nodeBatchSize = Integer.parseInt(p.getProperty("alfresco.nodeBatchSize", "10"));
         threadHandler = new ThreadHandler(p, coreName, "MetadataTracker");
+        String[] minTxninitialRangeString = p.getProperty("solr.initial.transaction.range", "0-2000").split("-");
+        minTxnIdRange = new Pair<Long, Long>(Long.valueOf(minTxninitialRangeString[0]), Long.valueOf(minTxninitialRangeString[1]));
     }
 
     MetadataTracker()
@@ -160,13 +169,13 @@ public class MetadataTracker extends CoreStatePublisher implements Tracker
     private void checkRepoAndIndexConsistency(TrackerState state) throws AuthenticationException, IOException, JSONException
     {
         Transactions firstTransactions = null;
-        if (state.getLastGoodTxCommitTimeInIndex() == 0) 
+        if (state.getLastGoodTxCommitTimeInIndex() == 0)
         {
             state.setCheckedLastTransactionTime(true);
             state.setCheckedFirstTransactionTime(true);
             log.info("No transactions found - no verification required");
 
-            firstTransactions = client.getTransactions(null, 0L, null, Long.MAX_VALUE, 1);
+            firstTransactions = client.getTransactions(null, minTxnIdRange.getFirst(), null, minTxnIdRange.getSecond(), 1);
             if (!firstTransactions.getTransactions().isEmpty())
             {
                 Transaction firstTransaction = firstTransactions.getTransactions().get(0);
@@ -175,22 +184,22 @@ public class MetadataTracker extends CoreStatePublisher implements Tracker
                 setLastTxCommitTimeAndTxIdInTrackerState(firstTransactions, state);
             }
         }
-        
+
         if (!state.isCheckedFirstTransactionTime())
         {
-            firstTransactions = client.getTransactions(null, 0L, null, Long.MAX_VALUE, 1);
+            firstTransactions = client.getTransactions(0l, minTxnIdRange.getFirst(), null, minTxnIdRange.getSecond(), 1);
             if (!firstTransactions.getTransactions().isEmpty())
             {
                 Transaction firstTransaction = firstTransactions.getTransactions().get(0);
                 long firstTxId = firstTransaction.getId();
                 long firstTransactionCommitTime = firstTransaction.getCommitTimeMs();
                 int setSize = this.infoSrv.getTxDocsSize(""+firstTxId, ""+firstTransactionCommitTime);
-                
+
                 if (setSize == 0)
                 {
                     log.error("First transaction was not found with the correct timestamp.");
-                    log.error("SOLR has successfully connected to your repository  however the SOLR indexes and repository database do not match."); 
-                    log.error("If this is a new or rebuilt database your SOLR indexes also need to be re-built to match the database."); 
+                    log.error("SOLR has successfully connected to your repository  however the SOLR indexes and repository database do not match.");
+                    log.error("If this is a new or rebuilt database your SOLR indexes also need to be re-built to match the database.");
                     log.error("You can also check your SOLR connection details in solrcore.properties.");
                     throw new AlfrescoRuntimeException("Initial transaction not found with correct timestamp");
                 }
@@ -211,9 +220,9 @@ public class MetadataTracker extends CoreStatePublisher implements Tracker
         {
             if (firstTransactions == null)
             {
-                firstTransactions = client.getTransactions(null, 0L, null, Long.MAX_VALUE, 1);
+                firstTransactions = client.getTransactions(null, minTxnIdRange.getFirst(), null, minTxnIdRange.getSecond(), 1);
             }
-            
+
             setLastTxCommitTimeAndTxIdInTrackerState(firstTransactions, state);
             Long maxTxnCommitTimeInRepo = firstTransactions.getMaxTxnCommitTime();
             Long maxTxnIdInRepo = firstTransactions.getMaxTxnId();
@@ -968,7 +977,7 @@ public class MetadataTracker extends CoreStatePublisher implements Tracker
     {
         // DB TX Count
         long firstTransactionCommitTime = 0;
-        Transactions firstTransactions = client.getTransactions(null, 0L, null, Long.MAX_VALUE, 1);
+        Transactions firstTransactions = client.getTransactions(null, minTxnIdRange.getFirst(), null, minTxnIdRange.getSecond(), 1);
         if(firstTransactions.getTransactions().size() > 0)
         {
             Transaction firstTransaction = firstTransactions.getTransactions().get(0);
